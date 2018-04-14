@@ -1,20 +1,135 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{ title }}!
+    <span appChangeText>Welcome to {{ title }}!</span>
   </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div>
+  <button (click)="animate()">Click Me</button>
+  <div [@myanimation] = "state" class="rotate">
+    <img src="assets/image/example.png" width="100" height="100">
+  </div>
+</div>
+<br/>
+<div>
+  <form [formGroup]="formdata" (ngSubmit) = "onClickSubmit(formdata.value)" >
+     <input type="text" class="fortextbox" name="emailid1" placeholder="emailid1" 
+        formControlName="emailid1">
+     <br/>
+     
+     <input type="password" class="fortextbox" name="passwd" 
+        placeholder="passwd" formControlName="passwd">
+     <br/>
+     
+     <input type="submit" [disabled] = "!formdata.valid" class="forsubmit" value="Log In">
+  </form>
+</div>
+<div>
+  Email entered is : {{emailid1}}
+</div>
+<div>
+  <form #userlogin = "ngForm" (ngSubmit) = "onClickSubmit(userlogin.value)" >
+    <input type = "text" name = "emailid2" placeholder = "emailid2" ngModel>
+    <br/>
+    <input type = "password" name = "passwd" placeholder = "passwd" ngModel>
+    <br/>
+    <input type = "submit" value = "submit">
+ </form>
+ <div>
+ {{logininfo}}
+</div>
+</div>
+<div> Months :
+  <select>
+     <option *ngFor="let i of months">{{i}}</option>
+  </select>
+</div>
+<div>
+  <span *ngIf = "isavailable; then condition1 else condition2">Condition is valid.</span> 
+  <ng-template #condition1>Condition is valid</ng-template>
+  <ng-template #condition2>Condition is invalid</ng-template>
+</div>
+<div>
+  {{name}}
+</div>
+<div>
+  <ul *ngFor = "let data of httpdata">
+    <li>Name : {{data.name}} Address: {{data.address.city}}</li>
+ </ul>
+</div>
+<br/>
+{{thedate}}
+<br/>
+{{componentproperty}}
+<p></p>
+<a routerLink = "firstcom">New component</a>
+<router-outlet></router-outlet>
+
+<!--app-firstcom></app-firstcom-->
+<h1>Custom Pipe</h1>
+<b>Square root of 25 is: {{25 | sqrt}}</b>
+<br/>
+<b>Square root of 729 is: {{729 | sqrt}}</b>
+<div style = "width:100%;">
+  <div style = "width:40%;float:left;border:solid 1px black;">
+     <h1>Uppercase Pipe</h1>
+     <b>{{title | uppercase}}</b><br/>
+     
+     <h1>Lowercase Pipe</h1>
+     <b>{{title | lowercase}}</b>
+     
+     <h1>Currency Pipe</h1>
+     <b>{{6589.23 | currency:"USD"}}</b><br/>
+     <b>{{6589.23 | currency:"USD":true}}</b> //Boolean true is used to get the sign of the currency.
+     
+     <h1>Date pipe</h1>
+     <b>{{todaydate | date:'d/M/y'}}</b><br/>
+     <b>{{todaydate | date:'shortTime'}}</b>
+     
+     <h1>Decimal Pipe</h1>
+     <b>{{ 454.78787814 | number: '3.4-4' }}</b> // 3 is for main integer, 4 -4 are for integers to be displayed.
+  </div>
+  
+  <div style = "width:40%;float:left;border:solid 1px black;">
+     <h1>Json Pipe</h1>
+     <b>{{ jsonval | json }}</b>
+     <h1>Percent Pipe</h1>
+     <b>{{00.54565 | percent}}</b>
+     <h1>Slice Pipe</h1>
+     <b>{{months | slice:2:6}}</b> 
+     // here 2 and 6 refers to the start and the end index
+  </div>
+</div>
+
+<div>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+     <button mat-menu-item>
+        File
+     </button>
+     <button mat-menu-item>
+        Save As
+     </button>
+  </mat-menu>
+  
+  <mat-sidenav-container class="example-container">
+     <mat-sidenav #sidenav class="example-sidenav">
+        Angular 4
+     </mat-sidenav>
+        
+     <div class="example-sidenav-content">
+        <button type="button" mat-button  (click)="sidenav.open()">
+           Open sidenav
+        </button>
+     </div>
+  </mat-sidenav-container>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="myDatepicker">
+    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #myDatepicker></mat-datepicker>
+  </mat-form-field>
+
+  </div>
+  
